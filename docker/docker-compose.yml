@@ -1,0 +1,18 @@
+zookeeper:
+  build: docker-zookeeper
+  ports:
+    - "2181"
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+kafka:
+  build: docker-kafka
+  ports:
+    - "9092"
+  links:
+    - zookeeper:zk
+  environment:
+    #docker-machine ip
+    KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
